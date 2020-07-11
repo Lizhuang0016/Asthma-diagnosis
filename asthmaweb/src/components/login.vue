@@ -10,7 +10,7 @@
         <div class="tooltip">Click Me</div>
       </div> -->
       <div class="form" style="padding-bottom: 20px;">
-        <h2>请输入用户名和密码</h2>
+        <h2>请输入用户名和密码：</h2>
         <form>
           <input v-model="account" type="text" placeholder="用户名" />
           <input v-model="password" type="password" placeholder="密码" />
