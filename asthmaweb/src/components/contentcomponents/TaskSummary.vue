@@ -81,9 +81,9 @@ export default {
       this.onlinedoctor = onedoctor;
     },
     getTaskByDid(){
-      this.$http.post("asthma_diagnosis_system/get_task_by_did.php",{doctor_id: this.onlinedoctor.doctor_id },{ emulateJSON: true }).then(result=>{
-        if(result.status==200){
-          this.task=result.body;
+      this.$http.post("get_task_by_did",{doctor_id: this.onlinedoctor.doctor_id },{ emulateJSON: true }).then(result=>{
+        if(result.status==200&&result.body.err_code===0){
+          this.task=result.body.tasks;
           console.log(this.task);
         }
       })
@@ -93,14 +93,14 @@ export default {
     this.getOnlineDoctor();
     this.getTaskByDid();
 
-    $("#tasklink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    $("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    //$("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#tasklink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // $("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // //$("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {
    
@@ -131,6 +131,7 @@ export default {
 }
 .task{
   width: 40%;
+  min-width: 450px;
   height: 340px;
   border: 1px solid black;
   float: left;

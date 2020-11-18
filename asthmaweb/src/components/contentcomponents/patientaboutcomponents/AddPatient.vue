@@ -191,11 +191,9 @@ export default {
                 patient_doctor_id:this.onlinedoctor.doctor_id,
                 patient_doctor_name:this.onlinedoctor.doctor_name
             }
-            console.log(this.patient);
-            this.$http.post('asthma_diagnosis_system/insert_patient.php',this.patient,{emulateJSON:true}).then(result=>{
-             if(result.status===200){
-               this.news=result.body;
-               console.log(this.news);
+            console.log("this.patient",this.patient);
+            this.$http.post('insert_patient',this.patient,{emulateJSON:true}).then(result=>{
+             if(result.status===200&&result.body.err_code===0){
                alert("添加成功!")
                this.$router.push('/navigation/patient/index/'+ this.onlinedoctor.doctor_id);
             }
@@ -225,14 +223,14 @@ export default {
   beforeCreate() {},
   created() {
     this.getOnlineDoctor();
-    $("#patientslink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    //$("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#patientslink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // //$("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {
   },

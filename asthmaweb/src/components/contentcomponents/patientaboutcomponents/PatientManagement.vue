@@ -44,7 +44,7 @@
                       <th style="width:10%;">性别</th>
                       <th style="width:10%;">年龄</th>
                       <th style="width:15%;">疾病类别</th>
-                      <th style="width:15%;">问诊时间</th>
+                      <th style="width:25%;">问诊时间</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -55,7 +55,7 @@
                       <td>{{patient.patient_sex}}</td>
                       <td>{{patient.patient_age}}</td>
                       <td>{{patient.patient_disease_cate}}</td>
-                      <td>{{patient.patient_clinic_time}}</td>
+                      <td style="min-width:120px;overflow-y:hidden;">{{patient.patient_clinic_time}}</td>
                       <td style="text-align:center;">
                         <router-link class="btn btn btn-default btn-outline m-r-5" style="margin-top: 11px;" 
                         :to="'/navigation/patient/details/'+onlinedoctor.doctor_id+'/'+patient.patient_id">详情</router-link>
@@ -101,13 +101,14 @@ export default {
     getAllPatientsByDid() {
       this.$http
         .post(
-          "asthma_diagnosis_system/get_patients_by_did.php",
+          "get_patients_by_did",
           { doctor_id: this.onlinedoctor.doctor_id },
           { emulateJSON: true }
         )
         .then(result => {
-          if (result.status === 200) {
-            this.patientlist = result.body;
+          if (result.status === 200&&result.body.err_code===0) {
+            console.log(result.body);
+            this.patientlist = result.body.patients;
             console.log(this.patientlist);
             console.log("长度",this.patientlist.length);
             console.log(this.patientlist.slice(18,30));
@@ -136,14 +137,14 @@ export default {
   created() {
     this.getOnlineDoctor();
     this.getAllPatientsByDid();
-    $("#patientslink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    //$("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#patientslink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // //$("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {},
   //挂载分页子组件

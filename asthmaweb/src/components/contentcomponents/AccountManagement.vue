@@ -180,7 +180,7 @@ export default {
     },
     confirmchangeinfo(){
       if(this.doctor_name&&this.doctor_sex&&this.doctor_age&&this.doctor_phone&&this.doctor_email){
-        this.$http.post('asthma_diagnosis_system/update_doctor_info_by_did.php',
+        this.$http.post('update_doctor_info_by_did',
         {doctor_id:this.onlinedoctor.doctor_id,
         doctor_name:this.doctor_name,
         doctor_sex:this.doctor_sex,
@@ -189,10 +189,11 @@ export default {
         doctor_email:this.doctor_email},
         {emulateJSON:true}
         ).then(result=>{
-          if(result.status==200){
-            this.$http.post('asthma_diagnosis_system/get_doctor_by_did.php',{doctor_id:this.onlinedoctor.doctor_id},{emulateJSON:true}).then(result=>{
-              if(result.status==200){
-                this.onlinedoctor=result.body[0];
+          if(result.status==200&&result.body.err_code===0){
+            console.log("this.onlinedoctor",this.onlinedoctor);
+            this.$http.post('get_doctor_by_did',{doctor_id:this.onlinedoctor.doctor_id},{emulateJSON:true}).then(result=>{
+              if(result.status==200&&result.body.err_code===0){
+                this.onlinedoctor=result.body.doctor[0];
                 //console.log(result.body[0])
                 localStorage.setItem('onlinedoctor',JSON.stringify(this.onlinedoctor))
                 this.regetOnlineDoctor();
@@ -233,9 +234,9 @@ export default {
           this.warntip3="两次输入的密码不一致";
           return ;
         }
-        this.$http.post('asthma_diagnosis_system/update_doctor_password_by_did.php',
+        this.$http.post('update_doctor_password_by_did',
         {doctor_id:this.onlinedoctor.doctor_id,doctor_password:this.newpassword},{emulateJSON:true}).then(result=>{
-          if(result.status==200){
+          if(result.status==200&&result.body.err_code===0){
             console.log("密码修改成功")
             this.changescussestip="密码修改成功!"
             //当在vue中使用定时器在function里直接使用this，发现没有效果，
@@ -263,13 +264,13 @@ export default {
   created() {
     this.getOnlineDoctor();
 
-    $("#accountlink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    $("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // $("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
     //$("#accountlink").removeClass("router-link-active");
   },
   updated() {},

@@ -131,13 +131,13 @@ export default {
     getPatientDetailsbyPid(patient_id) {
       this.$http
         .post(
-          "asthma_diagnosis_system/get_patient_by_pid.php",
+          "get_patient_by_pid",
           { patient_id: patient_id },
           { emulateJSON: true }
         )
         .then(result => {
-          if (result.status === 200) {
-            this.patient = result.body[0];
+          if (result.status === 200&&result.body.err_code===0) {
+            this.patient = result.body.patient[0];
             console.log(this.patient);
           }
         });
@@ -175,7 +175,7 @@ export default {
       console.log(this.changebuttonshow);
       this.$http
         .post(
-          "asthma_diagnosis_system/update_patient_disinfo_by_pid.php",
+          "update_patient_disinfo_by_pid",
           {
             patient_id: this.$route.params.patient_id,
             patient_disease_info: this.changediseaseinfo,
@@ -184,7 +184,7 @@ export default {
           { emulateJSON: true }
         )
         .then(result => {
-          if (result.status === 200) {
+          if (result.status === 200&&result.body.err_code===0) {
             console.log("更新成功");
             this.patient.patient_disease_info = this.changediseaseinfo;
             this.patient.patient_disease_cate=this.changepatient_cate;
@@ -197,14 +197,14 @@ export default {
     this.getPatientDetailsbyPid(this.curr_patient_id);
     this.getOnlineDoctor();
 
-    $("#patientslink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    //$("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#patientslink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // //$("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   }
 };
 </script>

@@ -114,17 +114,17 @@ export default {
   },
   methods: {
     getAllDoctor(){
-      this.$http.get('asthma_diagnosis_system/get_all_doctor.php').then(result => {
-        if(result.status===200){
-          this.doctorlist=result.body;
+      this.$http.get('get_all_doctor').then(result => {
+        if(result.status===200&&result.body.err_code===0){
+          this.doctorlist=result.body.doctors;
           console.log(result);
         }
       })
     },
     getAllNews(){
-      this.$http.get('asthma_diagnosis_system/get_all_news.php').then(result=>{
-        if(result.status===200){
-          this.newslist=result.body;
+      this.$http.get('get_all_news').then(result=>{
+        if(result.status===200&&result.body.err_code===0){
+          this.newslist=result.body.news;
           // console.log(this.newslist);
           // this.newslist=this.newslist.reverse();
           console.log("长度",this.newslist.length);
@@ -159,14 +159,14 @@ export default {
     this.getAllNews();
     this.getOnlineDoctor();
 
-    $("#messagelink").addClass("router-link-active");
-    //$("#messagelink").removeClass("router-link-active");
-    $("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#messagelink").addClass("router-link-active");
+    // //$("#messagelink").removeClass("router-link-active");
+    // $("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {
     
@@ -175,7 +175,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style slot-scoped>
+<style scoped>
 .elementincenter {
   text-align: center;
 }
@@ -183,12 +183,10 @@ export default {
   margin-left: 10px;
 }
 .fontsize20{
-    font-size: 20px;
+  font-size: 20px;
 }
 .messages_box{
   width: 100%; 
-  
-
 }
 .messages_box a{
   color:black;
@@ -222,7 +220,7 @@ export default {
 }
 .online-info{
   float: left;
-  width: 40%;
+  width: 70%;
   margin-left: 5%;
   height: 40px;
 }
@@ -238,7 +236,7 @@ export default {
 }
 .online-state{
   float: left;
-    width: 55%;
+    width: 25%;
     text-align: right;
     color: #41b3f9;
     font-size: 12px;

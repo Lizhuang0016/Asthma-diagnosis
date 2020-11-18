@@ -138,8 +138,8 @@ export default {
                 news_content:this.news_content
             }
             console.log(this.news);
-            this.$http.post('asthma_diagnosis_system/insert_news.php',this.news,{emulateJSON:true}).then(result=>{
-             if(result.status===200){
+            this.$http.post('insert_news',this.news,{emulateJSON:true}).then(result=>{
+             if(result.status===200&&result.body.err_code===0){
                this.news=result.body;
                console.log(this.news);
                alert("发布成功!")
@@ -187,7 +187,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style slot-scoped>
+<style scoped>
 .elementincenter {
   text-align: center;
 }

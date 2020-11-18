@@ -54,33 +54,40 @@
           <span class="hide-menu">智能疾病辅助诊断系统</span>
           </h3>
         </div>
-        <ul class="nav elementincenter" id="side-menu">
+        <ul class="nav elementincenter" id="side-menu" @click="isActive()">
           <li style="padding: 70px 0 0;">
-            <router-link id="messagelink" :to="'/navigation/message/index/'+ onlinedoctor.doctor_id" class="waves-effect">
+            <router-link id="messagelink" :to="'/navigation/message/index/'+ onlinedoctor.doctor_id" class="waves-effect"  
+            :class="[currmenu=='messagelink'?'active-link':'']">
               <i class="fa fa-bell fa-fw" aria-hidden="true"></i>通知信息</router-link>
           </li>
           <li>
-            <router-link id="patientslink" :to="'/navigation/patient/index/'+ onlinedoctor.doctor_id" class="waves-effect">
+            <router-link id="patientslink" :to="'/navigation/patient/index/'+ onlinedoctor.doctor_id" class="waves-effect" 
+            :class="[currmenu=='patientslink'?'active-link':'']">
               <i class="fa fa-male fa-fw" aria-hidden="true"></i>病人信息</router-link>
           </li>
           <li>
-            <router-link id="medicallink" :to="'/navigation/medical/'+ onlinedoctor.doctor_id" class="waves-effect">
+            <router-link id="medicallink" :to="'/navigation/medical/'+ onlinedoctor.doctor_id" class="waves-effect" 
+            :class="[currmenu=='medicallink'?'active-link':'']">
               <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>病例管理</router-link>
           </li>
           <li>
-            <router-link id="prescriptionlink" :to="'/navigation/prescription/'+ onlinedoctor.doctor_id" class="waves-effect">
+            <router-link id="prescriptionlink" :to="'/navigation/prescription/'+ onlinedoctor.doctor_id" class="waves-effect" 
+            :class="[currmenu=='prescriptionlink'?'active-link':'']">
               <i class="fa fa-book fa-fw" aria-hidden="true"></i>处方管理</router-link>
           </li>
           <li>
-            <router-link id="departmentlink" :to="'/navigation/department/'+ onlinedoctor.doctor_id" class="waves-effect">
+            <router-link id="departmentlink" :to="'/navigation/department/'+ onlinedoctor.doctor_id" class="waves-effect" 
+            :class="[currmenu=='departmentlink'?'active-link':'']">
               <i class="fa fa-bars fa-fw" aria-hidden="true"></i>部门管理</router-link>
           </li>
           <li>
-            <router-link id="tasklink" :to="'/navigation/task/'+ onlinedoctor.doctor_id" class="waves-effect">
+            <router-link id="tasklink" :to="'/navigation/task/'+ onlinedoctor.doctor_id" class="waves-effect" 
+            :class="[currmenu=='tasklink'?'active-link':'']">
               <i class="fa fa-calendar-o fa-fw" aria-hidden="true"></i>我的任务</router-link>
           </li>
           <li>
-            <router-link id="accountlink" :to="'/navigation/account/'+ onlinedoctor.doctor_id" class="waves-effect">
+            <router-link id="accountlink" :to="'/navigation/account/'+ onlinedoctor.doctor_id" class="waves-effect" 
+            :class="[currmenu=='accountlink'?'active-link':'']">
               <i class="fa fa-gear fa-fw" aria-hidden="true"></i>账户管理</router-link>
           </li>
         </ul>
@@ -113,12 +120,14 @@ export default {
       news: [],
       alert: "",
       filterInput: "",
-      messagelinkclass: ""
+      messagelinkclass: "",
+      currmenu:"messagelink"
     };
   },
   methods: {
     getOnlineDoctor() {
       var onedoctor = JSON.parse(localStorage.getItem("onlinedoctor"));
+      console.log("onedoctor",onedoctor);
       this.onlinedoctor = onedoctor;
     },
     loginout() {
@@ -128,6 +137,14 @@ export default {
       this.$router.push({
         path: "/navigation/account/" + this.onlinedoctor.doctor_id
       });
+    },
+    //获取当前点击的菜单栏名称并制定样式
+    isActive(e){
+      var event=e||window.event;
+      console.log("event",event)
+      var target=event.target||event.srcElement;
+      console.log("target",target.id);
+      this.currmenu=target.id;
     }
   },
   created() {
@@ -152,6 +169,12 @@ export default {
   font-size: 20px;
 }
 .router-link-active {
+  /* color: #54667a !important;
+  border-left: 3px solid #41b3f9 !important;
+  font-weight: 500 !important;
+  background: rgba(0, 0, 0, 0.07) !important; */
+}
+.active-link{
   color: #54667a !important;
   border-left: 3px solid #41b3f9 !important;
   font-weight: 500 !important;

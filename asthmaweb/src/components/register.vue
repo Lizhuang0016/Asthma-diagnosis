@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="height:1200px;">
     <div class="pen-title" style="margin-top:50px;">
-      <h1>XX医院辅助诊断系统</h1>
+      <h1>智能疾病辅助诊断系统</h1>
       <span>
         Create
         <i class="fa fa-paint-brush"></i> +
@@ -124,9 +124,9 @@ export default {
     },
     getAllDoctor() {//获取当前已注册的所有用户
       this.$http
-        .get("asthma_diagnosis_system/get_all_doctor.php.php")
+        .get("get_all_doctor")
         .then(result => {
-          if (result.status === 200) {
+          if (result.status === 200&&result.body.err_code===0) {
             this.doctorlist = result.body;
           }
         });
@@ -209,6 +209,7 @@ export default {
         doctor_age:this.age,
         doctor_email:this.email,
         doctor_phone:this.phone,
+        doctor_image:'../static/images/users/doctordefaultimage.jpg',
       };
       if(this.account==""){
         this.account_err="请输入用户名"
@@ -239,8 +240,8 @@ export default {
         this.errborder_phone="border-color-red"
       }
       if(this.account_err==''&&this.repassword_err==''&&this.age_err==''&&this.email_err==''&&this.phone_err==''){
-        this.$http.post('asthma_diagnosis_system/insert_doctor.php',this.newdoctor,{emulateJSON:true}).then(result =>{
-        if(result.status===200){
+        this.$http.post('insert_doctor',this.newdoctor,{emulateJSON:true}).then(result =>{
+        if(result.status===200&&result.body.err_code===0){
           this.getAllDoctor();
           this.newdoctor='';
           this.error_register="";

@@ -261,12 +261,12 @@ export default {
     //拿到当前病人的血常规信息
     getRbdataByPid(){
       this.$http.post(
-        "http://localhost/asthma_diagnosis_system/get_rbdata_by_pid.php",
+        "get_rbdata_by_pid",
         { "patient_id": this.curr_patient_id },
         { emulateJSON: true })
         .then(result=>{
-          if (result.status === 200) {
-            if(result.body.length==0){
+          if (result.status === 200&&result.body.err_code===0) {
+            if(result.body.rbdata.length==0){
               console.log("未或得数据")
               this.addbuttonflag=true;
               this.backbuttonflag=false;
@@ -274,7 +274,7 @@ export default {
               this.diatapflag=true;
             }
             else{
-              this.rbdata = result.body[0];
+              this.rbdata = result.body.rbdata[0];
               console.log("血常规数据:",this.rbdata);
             }
             
@@ -284,12 +284,12 @@ export default {
     //拿到当前病人的所有信息
     getPatientInfoByPid(){
       this.$http.post(
-        "http://localhost/asthma_diagnosis_system/get_patient_by_pid.php",
+        "get_patient_by_pid",
         { "patient_id": this.curr_patient_id },
         { emulateJSON: true })
         .then(result=>{
-          if (result.status === 200) {
-            this.patient_info = result.body[0];
+          if (result.status === 200&&result.body.err_code===0) {
+            this.patient_info = result.body.patient[0];
             console.log("病人数据:",this.patient_info);
           }
       })
@@ -336,14 +336,14 @@ export default {
     this.getOnlineDoctor();
     this.getRbdataByPid();
     this.getPatientInfoByPid();
-    $("#patientslink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    //$("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#patientslink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // //$("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   }
 };
 </script>
@@ -367,9 +367,9 @@ export default {
 }
 .rbdata-box{
   background: #fff;
-  padding: 60px 15%;
+  padding: 60px 5%;
   margin-bottom: 30px;
-  height: 800px;
+  height: 680px;
 }
 .table-responsive th {
   width: 100px;

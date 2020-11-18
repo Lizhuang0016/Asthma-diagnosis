@@ -89,9 +89,9 @@ export default {
   },
   methods: {
     getAllDepartment(){
-      this.$http.get("asthma_diagnosis_system/get_all_department.php").then(result=>{
-        if(result.status==200){
-          this.alldepartment=result.body;
+      this.$http.get("get_all_department").then(result=>{
+        if(result.status==200&&result.body.err_code===0){
+          this.alldepartment=result.body.departments;
         }
       })
     }
@@ -99,13 +99,13 @@ export default {
   created() {
     this.getAllDepartment();
 
-    $("#departmentlink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    $("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
+    // $("#departmentlink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // $("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
     //$("#accountlink").removeClass("router-link-active");
   },
   updated() {
@@ -136,6 +136,7 @@ export default {
 }
 .department{
   width: 40%;
+  min-width: 450px;
   height: 540px;
   border: 1px solid black;
   float: left;

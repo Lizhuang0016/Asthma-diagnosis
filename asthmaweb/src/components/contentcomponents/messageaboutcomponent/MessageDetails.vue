@@ -83,17 +83,17 @@ export default {
   },
   methods: {
     getAllNews(){
-      this.$http.get('asthma_diagnosis_system/get_all_news.php').then(result=>{
-        if(result.status===200){
+      this.$http.get('get_all_news').then(result=>{
+        if(result.status===200&&result.body.err_code===0){
           this.newslist=result.body;
           console.log(this.newslist);
         }
       })
     },
     getNewsById(newsid){
-      this.$http.post('asthma_diagnosis_system/get_news_by_id.php',{"news_id":newsid},{emulateJSON:true}).then(result=>{
-        if(result.status===200){
-          this.news=result.body[0];
+      this.$http.post('get_news_by_id',{"news_id":newsid},{emulateJSON:true}).then(result=>{
+        if(result.status===200&&result.body.err_code===0){
+          this.news=result.body.news[0];
           console.log(this.news);
         }
       })
@@ -107,18 +107,18 @@ export default {
   },
   created() {
     var newsid=this.$route.params.news_id;
-    console.log(this.$route.params.news_id);
+    console.log("news_id",this.$route.params.news_id);
     if(newsid){
       this.getNewsById(newsid)
     }
-    $("#messagelink").addClass("router-link-active");
-    //$("#messagelink").removeClass("router-link-active");
-    $("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#messagelink").addClass("router-link-active");
+    // //$("#messagelink").removeClass("router-link-active");
+    // $("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {
     
@@ -127,7 +127,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style slot-scoped>
+<style scoped>
 .mewssage-box{
   background: #fff;
     padding: 25px;

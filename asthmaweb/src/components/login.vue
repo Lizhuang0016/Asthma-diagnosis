@@ -1,7 +1,7 @@
 <template>
   <div class="login container">
     <div class="pen-title" style="margin-top:50px;">
-      <h1>XX医院辅助诊断系统</h1><span>Create <i class='fa fa-paint-brush'></i> + <i class='fa fa-code'></i> by <a
+      <h1>智能疾病辅助诊断系统</h1><span>Create <i class='fa fa-paint-brush'></i> + <i class='fa fa-code'></i> by <a
           href=''>Zhuang Li</a></span>
     </div>
     <!-- Form Module-->
@@ -43,32 +43,50 @@ export default {
       password:'',
       errmessage:'',
       doctorlist:[],
+      onlinedoctor:{}
     };
   },
   created(){//当Vm实例的data和methods初始化完毕后，Vm实例会自动执行
-  this.getAllDoctor();
+  //this.getAllDoctor();
   },
   methods: {
-    getAllDoctor(){
-      this.$http.get('asthma_diagnosis_system/get_all_doctor.php').then(result => {
-        if(result.status===200){
-          console.log(result)
-          this.doctorlist=result.body;
-        }
-      })
-    },
+    // getAllDoctor(){
+    //   this.$http.get('asthma_diagnosis_system/get_all_doctor.php').then(result => {
+    //     if(result.status===200){
+    //       console.log(result)
+    //       this.doctorlist=result.body;
+    //     }
+    //   }).catch((e) => {})
+    // },
     login(){
-      console.log(this.doctorlist.length);
-      for(var i=0;i<this.doctorlist.length;i++){
-        if(this.doctorlist[i].doctor_account==this.account&&this.doctorlist[i].doctor_password==this.password)
-        {
+      this.$http.post('doctor_login',{
+        doctor_account:this.account,
+        doctor_password:this.password
+        },{emulateJSON:true}).then(result => {
+        if(result.status===200&&result.body.err_code===0){
+          console.log("result------------------",result)
           console.log("登录成功")
-          this.$router.push({path:'/navigation/message/index/'+this.doctorlist[i].doctor_id})
-          localStorage.setItem('onlinedoctor',JSON.stringify(this.doctorlist[i]))
-          return;
+          console.log("result.body.doctor",result.body.doctor);
+          this.onlinedoctor=result.body.doctor[0];
+          this.$router.push({path:'/navigation/message/index/'+this.onlinedoctor.doctor_id})
+          localStorage.setItem('onlinedoctor',JSON.stringify(this.onlinedoctor))
+        }else if(result.status===500&&result.body.err_code===500){
+          this.errmessage='服务器错误，请稍后再试';
+        }else if(result.status===200&&result.body.err_code===1){
+          this.errmessage='用户名或密码错误';
         }
-      }
-      this.errmessage='用户名或密码错误';
+      }).catch((e) => {})
+      //console.log(this.doctorlist.length);
+      // for(var i=0;i<this.doctorlist.length;i++){
+      //   if(this.doctorlist[i].doctor_account==this.account&&this.doctorlist[i].doctor_password==this.password)
+      //   {
+      //     console.log("登录成功")
+      //     this.$router.push({path:'/navigation/message/index/'+this.doctorlist[i].doctor_id})
+      //     localStorage.setItem('onlinedoctor',JSON.stringify(this.doctorlist[i]))
+      //     return;
+      //   }
+      // }
+      // this.errmessage='用户名或密码错误';
     }
   },
 };

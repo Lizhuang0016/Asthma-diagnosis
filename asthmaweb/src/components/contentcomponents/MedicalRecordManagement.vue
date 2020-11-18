@@ -103,12 +103,12 @@ export default {
     getAllPatients() {
       this.$http
         .get(
-          "asthma_diagnosis_system/get_all_patients.php"
+          "get_all_patients"
         )
         .then(result => {
-          if (result.status === 200) {
+          if (result.status === 200&&result.body.err_code===0) {
             console.log(result.body);
-            this.allpatientlist = result.body;
+            this.allpatientlist = result.body.patients;
             this.pageConfigPageTotal.total=this.allpatientlist.length;
             var curpage=this.pageConfigPageTotal.pageNo;
             this.currpatientlist=this.allpatientlist.slice((curpage-1)*this.pageConfigPageTotal.pageSize,(curpage)*this.pageConfigPageTotal.pageSize);
@@ -127,14 +127,14 @@ export default {
   created() {
     this.getOnlineDoctor();
     this.getAllPatients();
-    $("#medicallink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    $("#patientslink").removeClass("router-link-active");
-    //$("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#medicallink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // $("#patientslink").removeClass("router-link-active");
+    // //$("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {},
   //挂载分页子组件

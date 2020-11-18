@@ -38,29 +38,29 @@
                 <div class="prescription" v-for="prescription in allprescription" :key="prescription.prescription_id">
                   <div class="prescription-title">
                     <div class="prescription-title-p" style="font-size:24px;font-weight:500;width:66%;padding-left: 40%;">处方笺</div>
-                    <div class="prescription-title-p" style="font-size:14px;width:33%;padding-top: 70px;padding-left: 4%;line-height:0px;">NO：{{prescription.prescription_id}}</div>
+                    <div class="prescription-title-p" style="font-size:14px;width:33%;padding-top: 70px;padding-left: 4%;line-height:0px;">NO:{{prescription.prescription_id}}</div>
                   </div>
                   <div class="prescription-info">
-                    <div style="width:25%">姓名：{{prescription.patient_name}}</div>
-                    <div style="width:25%">性别：{{prescription.patient_sex}}</div>
-                    <div style="width:25%">年龄：{{prescription.patient_age}}</div>
-                    <div style="width:25%">科别：{{prescription.prescription_depart_cate}}</div>
+                    <div style="width:25%">姓名:{{prescription.patient_name}}</div>
+                    <div style="width:25%">性别:{{prescription.patient_sex}}</div>
+                    <div style="width:25%">年龄:{{prescription.patient_age}}</div>
+                    <div style="width:25%">科别:{{prescription.prescription_depart_cate}}</div>
                   </div>
                   <div class="prescription-info">
-                    <div style="width:50%">费别：{{prescription.prescription_cost_cate}}</div>
-                    <div style="width:50%">门诊号：{{prescription.patient_id}}</div>
+                    <div style="width:50%">费别:{{prescription.prescription_cost_cate}}</div>
+                    <div style="width:50%">门诊号:{{prescription.patient_id}}</div>
                   </div>
                   <div class="prescription-content">
                     <div style="font-size:30px;font-weight:600;float:left;padding-left:5px;">R</div>
                     <div style="height: 50px;line-height: 50px;margin-left: 10%;" v-html="prescription.prescription_content"></div>
                   </div>
                   <div class="prescription-info">
-                    <div style="width:40%">处方医师：{{prescription.prescription_doctor_name}}</div>
-                    <div style="width:30%">调配者：{{prescription.prescription_deploy_people}}</div>
-                    <div style="width:30%">校对者：{{prescription.prescription_pro_people}}</div>
+                    <div style="width:40%">处方医师:{{prescription.prescription_doctor_name}}</div>
+                    <div style="width:30%">调配者:{{prescription.prescription_deploy_people}}</div>
+                    <div style="width:30%">校对者:{{prescription.prescription_pro_people}}</div>
                   </div>
                   <div class="prescription-info" style="border: 0px;">
-                    <div style="width:50%">药价：￥{{prescription.prescription_cost}}</div>
+                    <div style="width:50%">药价:￥{{prescription.prescription_cost}}</div>
                     <div style="width:50%;text-align:center;">{{prescription.prescription_time}}</div>
                   </div>
                 </div>
@@ -94,9 +94,9 @@ export default {
   },
   methods: {
     getAllPrescription(){
-      this.$http.get("asthma_diagnosis_system/get_all_prescription.php").then(result=>{
-        if(result.status==200){
-          this.allprescription=result.body;   
+      this.$http.get("get_all_prescription").then(result=>{
+        if(result.status==200&&result.body.err_code===0){
+          this.allprescription=result.body.prescriptions;   
           console.log(this.allprescription);   
         }
       })
@@ -105,14 +105,14 @@ export default {
   created() {
     this.getAllPrescription();
 
-    $("#prescriptionlink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    $("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    //$("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#prescriptionlink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // $("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // //$("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {
     
@@ -146,6 +146,7 @@ export default {
 }
 .prescription{
   width: 40%;
+  min-width: 440px;
   height: 700px;
   border: 1px solid black;
   float: left;

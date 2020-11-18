@@ -226,8 +226,8 @@ export default {
   },
   methods: {
     getPatientDetailsbyPid(patient_id){
-      this.$http.post('asthma_diagnosis_system/get_patient_by_pid.php',{"patient_id":patient_id},{emulateJSON:true}).then(result=>{
-        if(result.status===200){
+      this.$http.post('get_patient_by_pid',{"patient_id":patient_id},{emulateJSON:true}).then(result=>{
+        if(result.status===200&&result.body.err_code===0){
           this.patient=result.body[0];
           console.log(this.patient);
         }
@@ -266,8 +266,8 @@ export default {
         if(this.BASO2!=""&&this.BASO1!=""&&this.EO2!=""&&this.EO1!=""&&this.HCT!=""&&this.HGB!=""&&this.LYMPH2!=""&&this.LYMPH1!=""&&
         this.MCH!=""&&this.MCHC!=""&&this.MCV!=""&&this.MONO2!=""&&this.MONO1!=""&&this.MPV!=""&&this.NEUT2!=""&&this.NEUT1!=""&&
         this.PCT!=""&&this.PDW!=""&&this.PLT!=""&&this.RBC!=""&&this.RDW!=""&&this.WBC!=""){
-            this.$http.post('asthma_diagnosis_system/insert_rbdata.php',this.rbdata,{emulateJSON:true}).then(result=>{
-            if(result.status==200){
+            this.$http.post('insert_rbdata',this.rbdata,{emulateJSON:true}).then(result=>{
+            if(result.status==200&&result.body.err_code===0){
                 alert("添加成功！")
                 this.$router.push('/navigation/patient/diagnosis/'+ this.onlinedoctor.doctor_id+'/'+this.curr_patient_id);
             }
@@ -306,8 +306,8 @@ export default {
             RDW:datalist[20],
             WBC:datalist[21],
         }
-        this.$http.post('asthma_diagnosis_system/insert_rbdata.php',this.rbdata,{emulateJSON:true}).then(result=>{
-          if(result.status==200){
+        this.$http.post('insert_rbdata',this.rbdata,{emulateJSON:true}).then(result=>{
+          if(result.status==200&&result.body.err_code===0){
             alert("添加成功！")
             this.$router.push('/navigation/patient/diagnosis/'+ this.onlinedoctor.doctor_id+'/'+this.curr_patient_id);
           }else{
@@ -328,14 +328,14 @@ export default {
     console.log("当前病人ID", this.curr_patient_id);
     this.getOnlineDoctor();
     this.getPatientDetailsbyPid(this.curr_patient_id)
-    $("#patientslink").addClass("router-link-active");
-    $("#messagelink").removeClass("router-link-active");
-    //$("#patientslink").removeClass("router-link-active");
-    $("#medicallink").removeClass("router-link-active");
-    $("#prescriptionlink").removeClass("router-link-active");
-    $("#departmentlink").removeClass("router-link-active");
-    $("#tasklink").removeClass("router-link-active");
-    $("#accountlink").removeClass("router-link-active");
+    // $("#patientslink").addClass("router-link-active");
+    // $("#messagelink").removeClass("router-link-active");
+    // //$("#patientslink").removeClass("router-link-active");
+    // $("#medicallink").removeClass("router-link-active");
+    // $("#prescriptionlink").removeClass("router-link-active");
+    // $("#departmentlink").removeClass("router-link-active");
+    // $("#tasklink").removeClass("router-link-active");
+    // $("#accountlink").removeClass("router-link-active");
   },
   updated() {}
 };
